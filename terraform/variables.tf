@@ -30,6 +30,12 @@ variable "build_number" {
     description = "Jenkins build number"
 }
 
+variable "imageName" {
+    type    = string
+    default = "kromelky/application"
+    description = "Image file"
+}
+
 variable "docker_login" {
     type    = string
     default = "jenkins"
