@@ -16,7 +16,7 @@ class TestHelloWorld(unittest.TestCase):
 
     def test_message(self):
         response = self.app.get('/')
-        self.assertDictEqual({"id": 1, "message": "HelloWorld From Python"}, response.json)
+        self.assertDictEqual({"id": 1, "message": "HelloWorld from Python"}, response.json)
 
 if __name__ == '__main__':
     unittest.main()
