@@ -55,7 +55,7 @@ variable "instance_label" {
 
 variable "ami_key_pair_name" {
     type    = string
-    default = "main_key"
+    default = "dev2_key"
     description = "Pem key file name"
 }
 

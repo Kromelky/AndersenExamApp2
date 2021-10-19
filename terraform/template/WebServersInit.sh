@@ -13,4 +13,4 @@ EOF
 sudo systemctl start docker
 sudo systemctl enable docker
 sudo docker login -u ${docker_login} -p ${docker_pass} ec2-3-70-136-183.eu-central-1.compute.amazonaws.com:8085
-sudo docker run -d -p 8080:8080 ec2-3-70-136-183.eu-central-1.compute.amazonaws.com:8085/{imageName}
+sudo docker run -d -p 8080:8080 ec2-3-70-136-183.eu-central-1.compute.amazonaws.com:8085/${imageName}
