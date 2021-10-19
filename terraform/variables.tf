@@ -36,7 +36,6 @@ variable "docker_login" {
     description = "Image file"
 }
 
-
 variable "docker_pass" {
     type    = string
     description = "Image file"
