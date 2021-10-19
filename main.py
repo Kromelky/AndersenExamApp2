@@ -15,7 +15,7 @@ def get_AuthorMessage(ser_name, name):
 
 
 def processRequest(req):
-    response = jsonify(id=1, message="HelloWorld From Python")
+    response = jsonify(id=1, message="HelloWorld from Python")
     return response
 
 
