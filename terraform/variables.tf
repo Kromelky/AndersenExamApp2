@@ -50,7 +50,7 @@ variable "docker_image_name" {
 variable "instance_label" {
     type    = string
     default = "2"
-    description = "Instance labe;"
+    description = "Instance label"
 }
 
 variable "ami_key_pair_name" {
