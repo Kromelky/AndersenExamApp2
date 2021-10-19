@@ -24,7 +24,6 @@ pipeline {
             }
         }
 
-
         // add maven build
         stage ('Unit testing') {
             steps {
