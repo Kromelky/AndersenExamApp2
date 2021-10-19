@@ -26,7 +26,7 @@ def httpRoot():
 
 def runHttp():
     print("Running http")
-    app.run(host=args.host, port=args.port, threaded=True, debug=True)
+    app.run(host=args.host, port=args.port, threaded=True, debug=Flase)
 
 
 if __name__ == '__main__':
@@ -35,12 +35,6 @@ if __name__ == '__main__':
     parser.add_argument('-H', '--host', help=' Change application host ', type=str, default='0.0.0.0')
     parser.add_argument('-p', '--port', help=' Change listening post', type=int,
                         default=8080)
-    parser.add_argument('-ssl', '--usessl', help=' Using ssl on selected port', type=str,
-                        default='False')
-    parser.add_argument('-sk', '--sslkey', help=' Determinate relative path to SSl Key ', type=str,
-                        default="cert/key.pem")
-    parser.add_argument('-sc', '--sslcert', help=' Determinate relative path to SSl Certificate ', type=str,
-                        default='cert/cert.pem')
     args = parser.parse_args()
     runHttp()
 
