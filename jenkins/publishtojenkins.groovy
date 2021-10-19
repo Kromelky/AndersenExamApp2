@@ -63,7 +63,7 @@ pipeline {
         }
 
         //Start deployment
-        /*stage ('Invoke_deployment_pipeline') {
+        stage ('Invoke_deployment_pipeline') {
             steps {
                 script{
                     try {
@@ -76,6 +76,6 @@ pipeline {
                     }
                 }
             }
-        }*/
+        }
     }
 }
