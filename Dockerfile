@@ -6,8 +6,7 @@ RUN apk update && \
     apk add gcc libc-dev libxslt-dev mc libxml2-dev && \
     apk add libxslt && \
     pip install pyinstaller && \
-    pip install -r requirements.txt && \
-    mkdir /app
+    pip install -r requirements.txt
 WORKDIR /app
 RUN pyinstaller -F main.py
 
