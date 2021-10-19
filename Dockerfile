@@ -3,6 +3,8 @@ FROM python:3.9-alpine as build
 COPY requirements.txt requirements.txt
 COPY main.py /app/main.py
 RUN apk update && \
+    apk add gcc libc-dev libxslt-dev mc libxml2-dev && \
+    apk add libxslt && \
     pip install pyinstaller && \
     pip install -r requirements.txt && \
     mkdir /app
