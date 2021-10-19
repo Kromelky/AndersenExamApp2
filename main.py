@@ -26,7 +26,7 @@ def httpRoot():
 
 def runHttp():
     print("Running http")
-    app.run(host=args.host, port=args.port, threaded=True, debug=Flase)
+    app.run(host=args.host, port=args.port, threaded=True, debug=False)
 
 
 if __name__ == '__main__':
