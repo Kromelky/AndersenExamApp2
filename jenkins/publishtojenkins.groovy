@@ -27,7 +27,7 @@ pipeline {
         // add maven build
         stage ('Unit testing') {
             steps {
-                sh "python test_hello_world.py"
+                sh "python3 test_hello_world.py"
             }
         }
 
