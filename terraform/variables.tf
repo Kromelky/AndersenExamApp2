@@ -11,7 +11,6 @@ variable "instance_count" {
     description = "Instances count"
 }
 
-
 variable "template_script_path" {
     type    = string
     default = "template/WebServersInit.sh"
