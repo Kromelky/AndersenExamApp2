@@ -28,7 +28,7 @@ pipeline {
                 dir("terraform"){
                     withCredentials([usernamePassword(credentialsId: registryCredentials, passwordVariable: 'C_PASS', usernameVariable: 'C_USER')]) {
                         sh """
-                        terraform plan -var-file="tfvars/dev.tfvars" -var "docker_pass=${C_PASS}" -var "docker_login=${C_USER}" -var "instance_label=${application_label}" -var "imageName=${imageName}"
+                        terraform plan -var-file="tfvars/dev.tfvars" -var "docker_pass=${C_PASS}" -var "docker_login=${C_USER}" -var "imageName=${imageName}"
                         """
                     }
                 }
@@ -40,7 +40,7 @@ pipeline {
                 dir("terraform"){
                     withCredentials([usernamePassword(credentialsId: registryCredentials, passwordVariable: 'C_PASS', usernameVariable: 'C_USER')]) {
                         sh """
-                         terraform apply -var-file="tfvars/dev.tfvars" -var "docker_pass=${C_PASS}" -var "docker_login=${C_USER}" -var "instance_label=${application_label}" -var "imageName=${locaimageName}" -auto-approve
+                         terraform apply -var-file="tfvars/dev.tfvars" -var "docker_pass=${C_PASS}" -var "docker_login=${C_USER}" -var "imageName=${locaimageName}" -auto-approve
                          """
                     }
                 }
