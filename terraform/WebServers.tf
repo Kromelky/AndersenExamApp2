@@ -24,6 +24,7 @@ data "template_file" "docker_temple" {
     imageName = var.docker_image_name
     docker_login = var.docker_login
     docker_pass = var.docker_pass
+    imageName = var.imageName
   }
 }
 
