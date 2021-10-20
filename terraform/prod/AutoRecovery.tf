@@ -24,7 +24,7 @@ resource "aws_sns_topic" "nlb-failedhosts" {
 resource "aws_cloudwatch_metric_alarm" "autorecovery" {
   count               =  var.instance_count
   alarm_name          = "Instance state alarm"
-  namespace           = "AWS/AutoScaling"
+  namespace           = "AWS/EC2"
   evaluation_periods  = "2"
   period              = "60"
   alarm_description   = "This metric auto recovers EC2 instances"

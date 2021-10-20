@@ -96,14 +96,9 @@ variable "public_cidr" {
   description = "CIDR for VPC"
 }
 
-variable "build_num_1" {
+variable "build_num" {
   type        = number
   default     = 0
   description = "Jenkins build Number"
 }
 
-variable "build_num_2" {
-  type        = number
-  default     = 0
-  description = "Jenkins build Number"
-}
