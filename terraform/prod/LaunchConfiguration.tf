@@ -21,6 +21,6 @@ data "template_file" "docker_template" {
     docker_login = var.docker_login
     docker_pass = var.docker_pass
     imageName = var.imageName
-    build_num = var.build_num_1
+    build_num = var.build_num
   }
 }
