@@ -16,7 +16,7 @@ pipeline {
     stages {
         stage('Init terraform') {
             steps {
-                dir("terraform"){
+                dir("terraform/dev"){
                     sh "terraform init"
                 }
             }
@@ -25,7 +25,7 @@ pipeline {
 
         stage('Plan terraform') {
             steps {
-                dir("terraform"){
+                dir("terraform/dev"){
                     withCredentials([usernamePassword(credentialsId: registryCredentials, passwordVariable: 'C_PASS', usernameVariable: 'C_USER')]) {
                         sh """
                         terraform plan -var-file="tfvars/dev.tfvars" -var "docker_pass=${C_PASS}" -var "docker_login=${C_USER}" -var "imageName=${imageName}"
@@ -37,7 +37,7 @@ pipeline {
 
         stage('Apply terraform') {
             steps {
-                dir("terraform"){
+                dir("terraform/dev"){
                     withCredentials([usernamePassword(credentialsId: registryCredentials, passwordVariable: 'C_PASS', usernameVariable: 'C_USER')]) {
                         sh """
                          terraform apply -var-file="tfvars/dev.tfvars" -var "docker_pass=${C_PASS}" -var "docker_login=${C_USER}" -var "imageName=${imageName}" -auto-approve
