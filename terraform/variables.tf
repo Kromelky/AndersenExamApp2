@@ -60,13 +60,13 @@ variable "instance_label" {
 
 variable "ami_key_pair_name" {
     type    = string
-    default = "dev2_key"
+    default = "dev3_key"
     description = "Pem key file name"
 }
 
 variable "vpc_cidr" {
   type        = string
-  default     = "192.168.0.0/16"
+  default     = "10.0.0.0/16"
   description = "CIDR for VPC"
 }
 
@@ -92,6 +92,6 @@ variable "vpc_name" {
 
 variable "public_cidr" {
   type        = string
-  default     = "192.168.1.0/24"
+  default     = "10.1.1.0/24"
   description = "CIDR for VPC"
 }
