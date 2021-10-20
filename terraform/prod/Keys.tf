@@ -4,7 +4,7 @@ resource "tls_private_key" "RSA" {
 }
 
 resource "aws_key_pair" "generated_key" {
-  key_name_prefix   = var.ami_key_pair_name
+  key_name   = var.ami_key_pair_name
   public_key = tls_private_key.RSA.public_key_openssh
 }
 
