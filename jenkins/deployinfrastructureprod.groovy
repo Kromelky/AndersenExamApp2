@@ -17,7 +17,7 @@ pipeline {
         stage('Init terraform') {
             steps {
                 dir("terraform/dev"){
-                    sh "terraform init"
+                    sh "terraform init -migrate-state"
                 }
             }
         }
