@@ -5,7 +5,7 @@ data "aws_instances" "webserves"{
   
   filter {
     name   = "tag:WebType"
-    values = ["1","2"]
+    values = ["${var.instance_label}"]
   }
 
   depends_on = [aws_autoscaling_group.web_asg]

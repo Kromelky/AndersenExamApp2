@@ -23,7 +23,7 @@ resource "aws_sns_topic" "nlb-failedhosts" {
 
 resource "aws_cloudwatch_metric_alarm" "autorecovery" {
   count               =  var.instance_count
-  alarm_name          = "Instance state alarm"
+  alarm_name          = "Instance state alarm ${count.index} ${var.instance_label}"
   namespace           = "AWS/EC2"
   evaluation_periods  = "2"
   period              = "60"
