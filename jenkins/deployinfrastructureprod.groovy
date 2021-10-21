@@ -37,6 +37,7 @@ pipeline {
                                     sh """
                                     terraform init -migrate-state
                                     terraform plan -var-file="tfvars/prod.tfvars" -var "docker_pass=${C_PASS}" -var "docker_login=${C_USER}" -var "imageName=${imageName}" -var "instance_label=${application_label}"
+                                     """
                             }
                         }
                     }
