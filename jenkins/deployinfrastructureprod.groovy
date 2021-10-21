@@ -34,19 +34,9 @@ pipeline {
                                 """
                             }
                             catch (Exception ex) {
-                                println(ex.getMessage())
-                                if (ex.getMessage().contains("-migrate-state")){
                                     sh """
                                     terraform init -migrate-state
                                     terraform plan -var-file="tfvars/prod.tfvars" -var "docker_pass=${C_PASS}" -var "docker_login=${C_USER}" -var "imageName=${imageName}" -var "instance_label=${application_label}"
-                                    """
-                                }
-                                else {
-                                    sh """
-                                    terraform init -migrate-state
-                                    terraform plan -var-file="tfvars/prod.tfvars" -var "docker_pass=${C_PASS}" -var "docker_login=${C_USER}" -var "imageName=${imageName}" -var "instance_label=${application_label}"
-                                    """
-                                }
                             }
                         }
                     }
