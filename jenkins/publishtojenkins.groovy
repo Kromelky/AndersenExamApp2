@@ -16,12 +16,9 @@ pipeline {
 
     stages {
         stage('Code checkout') {
-            when {expression {
-                println(env.BRANCH_NAME)
-                return env.BRANCH_NAME == 'dev';
-            } }
+            when {expression { env.BRANCH_NAME == 'dev' } }
             steps {
-                echo branch
+                println(env.BRANCH_NAME)
                 checkout([$class                           : 'GitSCM',
                           branches                         : [[name: '*/dev']],
                           doGenerateSubmoduleConfigurations: false,
@@ -32,10 +29,7 @@ pipeline {
 
         // add maven build
         stage ('Unit testing') {
-            when { expression {
-                println(env.BRANCH_NAME)
-                return env.BRANCH_NAME == 'dev';
-            } }
+           when {expression { env.BRANCH_NAME == 'dev' } }
             steps {
                 sh "python3 test_hello_world.py"
             }
@@ -43,10 +37,7 @@ pipeline {
 
         // Building Docker images
         stage('Building image') {
-            when { expression {
-                println(env.BRANCH_NAME)
-                return env.BRANCH_NAME == 'dev';
-            } }
+            when {expression { env.BRANCH_NAME == 'dev' } }
             steps{
                 script {
                     dockerImage = docker.build(imageName)
@@ -55,10 +46,7 @@ pipeline {
         }
 
         stage('Test image') {
-            when { expression {
-                println(env.BRANCH_NAME)
-                return env.BRANCH_NAME == 'dev';
-            } }
+            when {expression { env.BRANCH_NAME == 'dev' } }
             steps {
                 script {
                     dockerImage.inside {
@@ -70,10 +58,7 @@ pipeline {
 
          // Uploading Docker images into Nexus Registry
         stage('Uploading to Nexus') {
-            when { expression {
-                println(env.BRANCH_NAME)
-                return env.BRANCH_NAME == 'dev';
-            } }
+            when {expression { env.BRANCH_NAME == 'dev' } }
             steps{
                 script {
                     docker.withRegistry('http://' + registry, nexus_login ) {
@@ -86,10 +71,7 @@ pipeline {
 
         //Start deployment
         stage ('Invoke_deployment_pipeline') {
-            expression {
-                println(env.BRANCH_NAME)
-                return env.BRANCH_NAME == 'dev';
-            }
+            when {expression { env.BRANCH_NAME == 'dev' } }
             steps {
                 script{
                     try {
@@ -105,11 +87,7 @@ pipeline {
         }
 
         stage ('Invoke_product_pipeline') {
-            when {
-            expression {
-                println(env.BRANCH_NAME)
-                return env.BRANCH_NAME == 'master';
-            }
+            when {expression { env.BRANCH_NAME == 'main' } }
             steps {
                 script{
                     echo "${env.BRANCH_NAME}"
