@@ -20,11 +20,11 @@ data "aws_availability_zones" "available" {
 
 #Adding subnet for each host
 resource "aws_subnet" "public" {
-  cidr_block = cidrsubnet(var.vpc_cidr, 8, 2)
+  cidr_block = cidrsubnet(var.vpc_cidr, 8, 1)
   vpc_id = data.aws_vpc.main.id
   availability_zone = data.aws_availability_zones.available.names[1]
   tags = {
-    Name = cidrsubnet(var.vpc_cidr, 8, 2)
+    Name = cidrsubnet(var.vpc_cidr, 8, 1)
   }
 }
 
