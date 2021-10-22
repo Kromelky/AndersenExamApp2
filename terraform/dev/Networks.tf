@@ -14,28 +14,17 @@ data "aws_route_table" "rt" {
 }
 
 
-resource "aws_vpc" "main" {
-  cidr_block       = var.vpc_cidr
-  instance_tenancy = var.tenancy
-  enable_dns_hostnames = var.enable_dns_support
-  enable_dns_support = var.enable_dns_hostnames
-  tags = {
-    Name = var.vpc_name
-  }
-}
-
 data "aws_availability_zones" "available" {
   state = "available"
 }
 
 #Adding subnet for each host
 resource "aws_subnet" "public" {
-  count = var.instance_count
-  cidr_block = cidrsubnet(var.vpc_cidr, 8, count.index)
+  cidr_block = cidrsubnet(var.vpc_cidr, 8, 2)
   vpc_id = data.aws_vpc.main.id
-  availability_zone = data.aws_availability_zones.available.names[count.index % length(data.aws_availability_zones.available.names)]
+  availability_zone = data.aws_availability_zones.available.names[1]
   tags = {
-    Name = cidrsubnet(var.vpc_cidr, 8, count.index)
+    Name = cidrsubnet(var.vpc_cidr, 8, 2)
   }
 }
 
