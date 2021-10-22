@@ -65,7 +65,6 @@ pipeline {
 
          // Uploading Docker images into Nexus Registry
         stage('Uploading to Nexus') {
-            when {expression { env.BRANCH_NAME == 'dev' } }
             steps{
                 script {
                     docker.withRegistry('http://' + registry, nexus_login ) {
@@ -76,13 +75,11 @@ pipeline {
             }
         }
 
-        //Start deployment
         stage ('Invoke_deployment_pipeline') {
-            when {expression { env.BRANCH_NAME == 'dev' } }
             steps {
                 script{
                     try {
-                        build job: 'DeployApplications2', parameters: [
+                        build job: 'DeployDevApplications', parameters: [
                             string(name: 'env', value: "dev"),
                             string(name: 'image', value: imageName)
                         ]
@@ -93,22 +90,6 @@ pipeline {
             }
         }
 
-        stage ('Invoke_product_pipeline') {
-            when {expression { env.BRANCH_NAME == 'main' } }
-            steps {
-                script{
-                    echo "${env.BRANCH_NAME}"
-                    try {
-                        build job: 'DeployProdApplications2', parameters: [
-                            string(name: 'env', value: "prod"),
-                            string(name: 'image', value: imageName)
-                        ]
-                    } catch (err) {
-                        echo err.getMessage()
-                    }
-                }
-            }
-        }
 
         stage ('Notify') {
             steps {
