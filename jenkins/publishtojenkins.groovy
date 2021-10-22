@@ -17,7 +17,9 @@ pipeline {
     stages {
 
         stage('Print branch') {
-            echo env.BRANCH_NAME
+             steps {
+                echo "${env.BRANCH_NAME}"
+             }
         }
 
         stage('Code checkout') {
