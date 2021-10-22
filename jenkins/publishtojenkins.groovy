@@ -31,7 +31,7 @@ pipeline {
 
         stage('Linter check') {
             steps {
-                sh 'python3 -m pylint --output-format=parseable --fail-under=7 main.py --msg-template="{path}:{line}: [{msg_id}({symbol}), {obj}] {msg}" | tee pylint.log || echo "pylint exited with $?"'
+                sh 'python3 -m pylint --output-format=parseable --fail-under=7.0 main.py --msg-template="{path}:{line}: [{msg_id}({symbol}), {obj}] {msg}" | tee pylint.log || echo "pylint exited with $?"'
                 echo "linting Success, Generating Report"
                 recordIssues enabledForFailure: true, aggregatingResults: true, tool: pyLint(pattern: 'pylint.log')
             }
