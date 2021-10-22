@@ -17,7 +17,6 @@ pipeline {
     stages {
 
         stage('Code checkout') {
-            when {expression { env.BRANCH_NAME == 'dev' } }
             steps {
                 println(env.BRANCH_NAME)
                 checkout([$class                           : 'GitSCM',
@@ -27,6 +26,26 @@ pipeline {
                           userRemoteConfigs                : [[credentialsId: gitHubAuthId, url: repo]]])
             }
         }
+
+        // Linter Check
+
+        stage('Linter check') {
+            steps {
+                sh 'pylint  --disable=C0116 --output-format=parseable --reports=no main.py > pylint.log || echo "pylint exited with $?")'
+                sh 'cat render/pylint.log'
+
+                step([
+                    $class                     : 'WarningsPublisher',
+                    parserConfigurations       : [[
+                                              parserName: 'PYLint',
+                                              pattern   : 'pylint.log'
+                                      ]],
+                    unstableTotalAll           : '0',
+                    usePreviousBuildAsReference: true
+                ])
+            }
+        }
+
 
         // add maven build
         stage ('Unit testing') {
