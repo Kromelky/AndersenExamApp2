@@ -15,6 +15,11 @@ pipeline {
     // Getting from repository
 
     stages {
+
+        stage('Print branch') {
+            echo env.BRANCH_NAME
+        }
+
         stage('Code checkout') {
             when {expression { env.BRANCH_NAME == 'dev' } }
             steps {
