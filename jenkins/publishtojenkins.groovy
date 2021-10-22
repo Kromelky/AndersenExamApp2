@@ -16,10 +16,9 @@ pipeline {
 
     stages {
         stage('Code checkout') {
-            when {
-                branch 'dev'
-            }
+            when { branch "dev" }
             steps {
+                echo branch
                 checkout([$class                           : 'GitSCM',
                           branches                         : [[name: '*/dev']],
                           doGenerateSubmoduleConfigurations: false,
@@ -30,9 +29,7 @@ pipeline {
 
         // add maven build
         stage ('Unit testing') {
-            when {
-                branch 'dev'
-            }
+            when { branch "dev" }
             steps {
                 sh "python3 test_hello_world.py"
             }
@@ -40,9 +37,7 @@ pipeline {
 
         // Building Docker images
         stage('Building image') {
-            when {
-                branch 'dev'
-            }
+            when { branch "dev" }
             steps{
                 script {
                     dockerImage = docker.build(imageName)
@@ -51,9 +46,7 @@ pipeline {
         }
 
         stage('Test image') {
-            when {
-                branch 'dev'
-            }
+            when { branch "dev" }
             steps {
                 script {
                     dockerImage.inside {
@@ -65,9 +58,7 @@ pipeline {
 
          // Uploading Docker images into Nexus Registry
         stage('Uploading to Nexus') {
-            when {
-                branch 'dev'
-            }
+            when { branch "dev" }
             steps{
                 script {
                     docker.withRegistry('http://' + registry, nexus_login ) {
@@ -80,9 +71,7 @@ pipeline {
 
         //Start deployment
         stage ('Invoke_deployment_pipeline') {
-            when {
-                branch 'dev'
-            }
+            when { branch "dev" }
             steps {
                 script{
                     try {
@@ -98,9 +87,7 @@ pipeline {
         }
 
         stage ('Invoke_product_pipeline') {
-            when {
-                branch 'main'
-            }
+            when { branch 'main' }
             steps {
                 script{
                     try {
