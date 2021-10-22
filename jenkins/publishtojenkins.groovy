@@ -70,7 +70,7 @@ pipeline {
             steps {
                 script{
                     try {
-                        build job: 'DeployDevApplications', parameters: [
+                        build job: 'DeployDevApplications2', parameters: [
                             string(name: 'env', value: "dev"),
                             string(name: 'image', value: imageName)
                         ]
