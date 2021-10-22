@@ -1,5 +1,5 @@
 resource "aws_security_group" "sg_allow_ssh" {
-  name        = "ssh"
+  name_prefix        = "ssh"
   description = "Allow ssh inbound traffic"
   vpc_id      = data.aws_vpc.main.id
 
@@ -27,7 +27,7 @@ resource "aws_security_group" "sg_allow_ssh" {
 }
 
 resource "aws_security_group" "sg_allow_web" {
-  name        = "allow_http"
+  name_prefix        = "allow_http"
   description = "Allow HTTP inbound traffic"
   vpc_id      = data.aws_vpc.main.id
 
