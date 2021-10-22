@@ -16,12 +16,6 @@ pipeline {
 
     stages {
 
-        stage('Print branch') {
-             steps {
-                echo "${env.BRANCH_NAME}"
-             }
-        }
-
         stage('Code checkout') {
             when {expression { env.BRANCH_NAME == 'dev' } }
             steps {
@@ -36,7 +30,6 @@ pipeline {
 
         // add maven build
         stage ('Unit testing') {
-           when {expression { env.BRANCH_NAME == 'dev' } }
             steps {
                 sh "python3 test_hello_world.py"
             }
@@ -44,7 +37,6 @@ pipeline {
 
         // Building Docker images
         stage('Building image') {
-            when {expression { env.BRANCH_NAME == 'dev' } }
             steps{
                 script {
                     dockerImage = docker.build(imageName)
@@ -53,7 +45,6 @@ pipeline {
         }
 
         stage('Test image') {
-            when {expression { env.BRANCH_NAME == 'dev' } }
             steps {
                 script {
                     dockerImage.inside {
