@@ -16,7 +16,10 @@ pipeline {
 
     stages {
         stage('Code checkout') {
-            when { branch "dev" }
+            when {expression {
+                println(env.BRANCH_NAME)
+                return env.BRANCH_NAME == 'dev';
+            } }
             steps {
                 echo branch
                 checkout([$class                           : 'GitSCM',
@@ -29,7 +32,10 @@ pipeline {
 
         // add maven build
         stage ('Unit testing') {
-            when { branch "dev" }
+            when { expression {
+                println(env.BRANCH_NAME)
+                return env.BRANCH_NAME == 'dev';
+            } }
             steps {
                 sh "python3 test_hello_world.py"
             }
@@ -37,7 +43,10 @@ pipeline {
 
         // Building Docker images
         stage('Building image') {
-            when { branch "dev" }
+            when { expression {
+                println(env.BRANCH_NAME)
+                return env.BRANCH_NAME == 'dev';
+            } }
             steps{
                 script {
                     dockerImage = docker.build(imageName)
@@ -46,7 +55,10 @@ pipeline {
         }
 
         stage('Test image') {
-            when { branch "dev" }
+            when { expression {
+                println(env.BRANCH_NAME)
+                return env.BRANCH_NAME == 'dev';
+            } }
             steps {
                 script {
                     dockerImage.inside {
@@ -58,7 +70,10 @@ pipeline {
 
          // Uploading Docker images into Nexus Registry
         stage('Uploading to Nexus') {
-            when { branch "dev" }
+            when { expression {
+                println(env.BRANCH_NAME)
+                return env.BRANCH_NAME == 'dev';
+            } }
             steps{
                 script {
                     docker.withRegistry('http://' + registry, nexus_login ) {
@@ -71,7 +86,10 @@ pipeline {
 
         //Start deployment
         stage ('Invoke_deployment_pipeline') {
-            when { branch "dev" }
+            expression {
+                println(env.BRANCH_NAME)
+                return env.BRANCH_NAME == 'dev';
+            }
             steps {
                 script{
                     try {
@@ -87,9 +105,14 @@ pipeline {
         }
 
         stage ('Invoke_product_pipeline') {
-            when { branch 'main' }
+            when {
+            expression {
+                println(env.BRANCH_NAME)
+                return env.BRANCH_NAME == 'master';
+            }
             steps {
                 script{
+                    echo "${env.BRANCH_NAME}"
                     try {
                         build job: 'DeployProdApplications2', parameters: [
                             string(name: 'env', value: "prod"),
